@@ -1,0 +1,29 @@
+name: Trading Signal Scanner
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run scanner
+        run: node scanner.js
+        env:
+          OUTLOOK_EMAIL: ${{ secrets.OUTLOOK_EMAIL }}
+          OUTLOOK_PASSWORD: ${{ secrets.OUTLOOK_PASSWORD }}
+          ALERT_TO: ${{ secrets.ALERT_TO }}
