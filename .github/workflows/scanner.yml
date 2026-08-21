@@ -21,6 +21,9 @@ jobs:
         with:
           node-version: 20
 
+      - name: Install email dependency
+        run: npm install nodemailer
+
       - name: Run scanner
         run: node scanner.js
         env:
